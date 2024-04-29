@@ -4,7 +4,7 @@ import config
 
 
 class ORM:
-    def read_from_table(self, table: str, key: str = None, value=None, inner_joins: list[tuple[str, str]] = None) -> list[list] | list | mysql.connector.errors.Error:
+    def read_from_table(self, table: str, key: str = None, value=None, inner_joins: list[tuple[str, str]] = None):
         inner_join_sql = ""
         if inner_joins:
             inner_join_sql = " ".join([f"LEFT JOIN {table2} ON {table}.{key2} = {table2}.{key2}" for table2, key2 in inner_joins])
@@ -22,7 +22,7 @@ class ORM:
 
         return ret
 
-    def write_to_table(self, table: str, data: dict) -> bool | mysql.connector.errors.Error:
+    def write_to_table(self, table: str, data: dict):
         keys = ", ".join(data.keys())
         values = ", ".join("null" if value is None else (str(value) if isinstance(value, int) else f"'{value}'") for value in data.values())
 
@@ -30,7 +30,7 @@ class ORM:
 
         return self.post_query(query)
 
-    def remove_from_table(self, table: str, key: str, value: int | str) -> bool | mysql.connector.errors.Error:
+    def remove_from_table(self, table: str, key: str, value):
         if isinstance(value, int):
             sql = f"DELETE FROM {table} WHERE {key} = {value};"
         else:
@@ -38,7 +38,7 @@ class ORM:
 
         return self.post_query(sql)
 
-    def update_to_table(self, table: str, data: dict, key: str, value: str | int) -> bool | mysql.connector.errors.Error:
+    def update_to_table(self, table: str, data: dict, key: str, value):
 
         values = []
         for k, v in data.items():
@@ -61,7 +61,7 @@ class ORM:
             return True
         return False
 
-    def exists_entry(self, table: str, key: str, value: str | int) -> bool | mysql.connector.errors.Error:
+    def exists_entry(self, table: str, key: str, value):
         if isinstance(value, int):
             sql = f"SELECT * FROM {table} WHERE {key} = {value};"
         else:
@@ -73,7 +73,7 @@ class ORM:
 
         return len(ret) > 0
 
-    def post_query(self, sql: str) -> bool | mysql.connector.errors.Error:
+    def post_query(self, sql: str):
         try:
             conn, cursor = self.connect()
             cursor.execute(sql)
@@ -83,7 +83,7 @@ class ORM:
         except mysql.connector.errors.Error as e:
             return e
 
-    def get_query(self, sql: str) -> list | mysql.connector.errors.Error:
+    def get_query(self, sql: str):
         try:
             conn, cursor = self.connect()
             cursor.execute(sql)

@@ -8,7 +8,7 @@ class APIHelper:
     def __init__(self):
         self.db = ORM()
 
-    def get_keys(self) -> list[str] | None:
+    def get_keys(self):
         ret = self.db.read_from_table(self.TABLE)
         return [x[0] for x in ret]
 
@@ -38,7 +38,7 @@ class EmployeeHelper:
     def to_employee(self, x):
         return Employee(x[0], x[1], x[2], x[3], x[4], x[5])
 
-    def get_employees(self, pin: int = None) -> Employee | list[Employee] | None:
+    def get_employees(self, pin: int = None):
         if not pin:
             ret = self.db.read_from_table(self.TABLE)
             return [self.to_employee(x) for x in ret]
@@ -84,7 +84,7 @@ class ArticleHelper:
     def to_article(self, x):
         return Article(x[0], x[1], x[2])
 
-    def get_article(self, article_id: int = None) -> Article | list[Article] | None:
+    def get_article(self, article_id: int = None):
         if not article_id:
             ret = self.db.read_from_table(self.TABLE)
             return [self.to_article(x) for x in ret]
@@ -95,7 +95,7 @@ class ArticleHelper:
                 return self.to_article(ret[0])
             return None
 
-    def get_article_by_ean(self, ean: str) -> Article | None:
+    def get_article_by_ean(self, ean: str):
         ret = self.db.read_from_table(self.TABLE, "ean", ean)
         if len(ret) != 0:
             return self.to_article(ret[0])
