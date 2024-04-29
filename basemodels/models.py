@@ -1,11 +1,12 @@
 class Employee:
 
-    def __init__(self, id: int, pin: int, time: float = None, rounds: int = None, name: str = None):
+    def __init__(self, id: int, pin: int, time: float = None, rounds: int = None, name: str = None, admin: bool = False):
         self.id = id
         self.pin = pin
         self.time = time
         self.rounds = rounds
         self.name = name
+        self.admin = admin
 
     def to_dict(self) -> dict:
         return {
@@ -13,7 +14,8 @@ class Employee:
             "pin": self.pin,
             "time": self.time,
             "rounds": self.rounds,
-            "name": self.name
+            "name": self.name,
+            "admin": self.admin
         }
 
 

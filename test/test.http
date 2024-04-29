@@ -1,6 +1,3 @@
-GET http://localhost:5555/api/employees
+GET http://127.0.0.1:5555/api/employees
 Content-Type: application/json
 x-api-key: 4234%32Tggrefe67uJTZU
-
-
-###

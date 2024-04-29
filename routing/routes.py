@@ -24,19 +24,21 @@ class Employees(Resource):
         super().__init__(*args, **kwargs)
 
     def check_data(self, data) -> (bool, str):
-        should = ["employee_id", "pin"]
+        should = ["pin"]
         names = []
         for element in should:
             if element not in data.keys():
                 names.append(element)
         return len(names) == 0, ", ".join(names)
 
-    def get(self, employee_id: int = None):
-        if employee_id is None:
+    def get(self, pin: int = None):
+        if pin is None:
             return {"employees": [employee.to_dict() for employee in self.employee_helper.get_employees()]}, 200
         else:
-            employee = self.employee_helper.get_employees(employee_id)
-            return {employee.id: employee.to_dict()}, 200
+            employee = self.employee_helper.get_employees(pin)
+            if employee:
+                return {employee.pin: employee.to_dict()}, 200
+            return {"message": "Employee not found"}, 404
 
     def post(self):
         data = request.get_json()

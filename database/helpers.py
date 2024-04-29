@@ -36,15 +36,15 @@ class EmployeeHelper:
         self.db = ORM()
 
     def to_employee(self, x):
-        return Employee(x[0], x[1], x[2], x[3], x[4])
+        return Employee(x[0], x[1], x[2], x[3], x[4], x[5])
 
-    def get_employees(self, employee_id: int = None) -> Employee | list[Employee] | None:
-        if not employee_id:
+    def get_employees(self, pin: int = None) -> Employee | list[Employee] | None:
+        if not pin:
             ret = self.db.read_from_table(self.TABLE)
             return [self.to_employee(x) for x in ret]
         else:
-            if self.employee_exists(employee_id):
-                ret = self.db.read_from_table(self.TABLE, "employee_id", employee_id)
+            if self.employee_exists(pin):
+                ret = self.db.read_from_table(self.TABLE, "pin", pin)
                 print(ret)
                 return self.to_employee(ret[0])
             return None
@@ -57,9 +57,9 @@ class EmployeeHelper:
             return True
         return False
 
-    def delete_employee(self, employee_id: int) -> bool:
-        if self.employee_exists(employee_id):
-            self.db.remove_from_table(self.TABLE, "employee_id", employee_id)
+    def delete_employee(self, pin: int) -> bool:
+        if self.employee_exists(pin):
+            self.db.remove_from_table(self.TABLE, "pin", pin)
             return True
         return False
 
@@ -71,8 +71,8 @@ class EmployeeHelper:
             return True
         return False
 
-    def employee_exists(self, id: int) -> bool:
-        return self.db.exists_entry(self.TABLE, "employee_id", id)
+    def employee_exists(self, pin: int) -> bool:
+        return self.db.exists_entry(self.TABLE, "pin", pin)
 
 
 class ArticleHelper:

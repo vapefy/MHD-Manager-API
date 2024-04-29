@@ -5,7 +5,7 @@ from routing.routes import *
 
 
 def register_api(api):
-    api.add_resource(Employees, '/api/employees', '/api/employees/<int:employee_id>')
+    api.add_resource(Employees, '/api/employees', '/api/employees/<int:pin>')
     api.add_resource(Articles, '/api/articles', '/api/articles/<string:article_id_ean>')
 
 
